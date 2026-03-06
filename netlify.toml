@@ -1,0 +1,13 @@
+# Netlify config for Flutter web deploy
+# Build: installs Flutter (cached) and runs flutter build web
+# Publish: build/web
+
+[build]
+  publish = "build/web"
+  command = "bash scripts/netlify-build.sh"
+
+[build.environment]
+  FLUTTER_VERSION = "stable"
+
+# Optional: Netlify Forms (free tier) – form is in web/index.html with honeypot
+# CAPTCHA can be enabled in Netlify dashboard: Form settings → Spam filters → reCAPTCHA 2

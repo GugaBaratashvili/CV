@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!--
+    If you are serving your web app in a path other than the root, change the
+    href value below to reflect the base path you are serving from.
+
+    The path provided below has to start and end with a slash "/" in order for
+    it to work correctly.
+
+    For more details:
+    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
+
+    This is a placeholder for base href that will be replaced by the value of
+    the `--base-href` argument provided to `flutter build`.
+  -->
+  <base href="$FLUTTER_BASE_HREF">
+
+  <meta charset="UTF-8">
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="description" content="A new Flutter project.">
+
+  <!-- iOS meta tags & icons -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="cv">
+  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon.png"/>
+
+  <title>Student CV / Spouse CV</title>
+  <link rel="manifest" href="manifest.json">
+  <style>
+    .netlify-form-hidden { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+  </style>
+</head>
+<body>
+  <!-- Netlify Forms (free): form detected at deploy; submitted via JS from Flutter. Honeypot = free spam filter. -->
+  <form name="cv-form" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" class="netlify-form-hidden" aria-hidden="true">
+    <input type="hidden" name="form-name" value="cv-form" />
+    <p class="netlify-form-hidden">
+      <label>Don't fill this out if you're human: <input name="bot-field" type="text" tabindex="-1" autocomplete="off" /></label>
+    </p>
+    <input type="hidden" name="submission-type" id="netlify-cv-type" value="" />
+    <input type="hidden" name="timestamp" id="netlify-cv-ts" value="" />
+  </form>
+  <script src="flutter_bootstrap.js" async></script>
+  <script>
+    // Expose Netlify form submit for Flutter web (optional: call from Flutter when CV is submitted)
+    window.submitNetlifyCvForm = function(type) {
+      var form = document.querySelector('form[name="cv-form"]');
+      if (!form) return Promise.resolve();
+      var typeEl = document.getElementById('netlify-cv-type');
+      var tsEl = document.getElementById('netlify-cv-ts');
+      if (typeEl) typeEl.value = type || 'unknown';
+      if (tsEl) tsEl.value = new Date().toISOString();
+      return fetch(form.action || '/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams(new FormData(form)).toString()
+      });
+    };
+  </script>
+</body>
+</html>
