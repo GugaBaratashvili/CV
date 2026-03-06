@@ -17,67 +17,81 @@ const Color _kHeadingPurple = Color(0xFF2D3129);
 /// Slate: Medium Vibrant Green – primary buttons.
 const Color _kAccentGreen = Color(0xFF4DBE55);
 
-/// Shows the welcome / user agreement dialog (app color scheme).
+/// Shows the welcome / user agreement dialog (theme-aware).
 void _showWelcomeDialog(BuildContext context) {
   showDialog<void>(
     context: context,
     barrierDismissible: false,
-    builder: (context) => Dialog(
-      backgroundColor: _kFormContainerCream,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-      child: Padding(
-        padding: const EdgeInsets.all(24),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            const Center(
-              child: Text(
-                'Welcome',
-                style: TextStyle(
-                  fontSize: 22,
-                  fontWeight: FontWeight.bold,
-                  color: _kHeadingPurple,
-                ),
-              ),
-            ),
-            const SizedBox(height: 16),
-            const Text(
-              'This application is for official use only in accordance with applicable policies. '
-              'By continuing, you acknowledge that you are authorized to use this system and that any information you submit is only for offiicial purposes. '
-              'Please ensure that all data you provide is accurate and complete.',
-              style: TextStyle(
-                fontSize: 15,
-                height: 1.45,
-                color: _kLogoBackgroundDark,
-              ),
-            ),
-            const SizedBox(height: 24),
-            SizedBox(
-              width: double.infinity,
-              child: FilledButton(
-                onPressed: () => Navigator.of(context).pop(),
-                style: FilledButton.styleFrom(
-                  backgroundColor: _kAccentGreen,
-                  foregroundColor: Colors.white,
-                  padding: const EdgeInsets.symmetric(vertical: 14),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
+    builder: (ctx) {
+      final theme = Theme.of(ctx);
+      final surface = theme.colorScheme.surface;
+      final onSurface = theme.colorScheme.onSurface;
+      final primary = theme.colorScheme.primary;
+      final onPrimary = theme.colorScheme.onPrimary;
+      return Dialog(
+        backgroundColor: surface,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        child: Padding(
+          padding: const EdgeInsets.all(24),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Center(
+                child: Text(
+                  'Welcome',
+                  style: TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                    color: onSurface,
                   ),
                 ),
-                child: const Text('OK'),
               ),
-            ),
-          ],
+              const SizedBox(height: 16),
+              Text(
+                'This application is for official use only in accordance with applicable policies. '
+                'By continuing, you acknowledge that you are authorized to use this system and that any information you submit is only for offiicial purposes. '
+                'Please ensure that all data you provide is accurate and complete.',
+                style: TextStyle(
+                  fontSize: 15,
+                  height: 1.45,
+                  color: onSurface,
+                ),
+              ),
+              const SizedBox(height: 24),
+              SizedBox(
+                width: double.infinity,
+                child: FilledButton(
+                  onPressed: () => Navigator.of(ctx).pop(),
+                  style: FilledButton.styleFrom(
+                    backgroundColor: primary,
+                    foregroundColor: onPrimary,
+                    padding: const EdgeInsets.symmetric(vertical: 14),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                  child: const Text('OK'),
+                ),
+              ),
+            ],
+          ),
         ),
-      ),
-    ),
+      );
+    },
   );
 }
 
 /// Home screen with two tabs: Student CV and Spouse CV.
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  const HomeScreen({
+    super.key,
+    required this.onToggleTheme,
+    required this.isDarkMode,
+  });
+
+  final VoidCallback onToggleTheme;
+  final bool isDarkMode;
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -94,15 +108,34 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final scaffoldBg = theme.brightness == Brightness.dark
+        ? theme.scaffoldBackgroundColor
+        : _kScaffoldGreen;
+    final formContainerColor = theme.brightness == Brightness.dark
+        ? theme.colorScheme.surface
+        : _kFormContainerCream;
+    final tabColor = theme.brightness == Brightness.dark
+        ? theme.colorScheme.onSurface
+        : _kLogoBackgroundDark;
+
     return DefaultTabController(
       length: 2,
       initialIndex: 0,
       child: Scaffold(
-        backgroundColor: _kScaffoldGreen,
+        backgroundColor: scaffoldBg,
         appBar: AppBar(
-          backgroundColor: _kScaffoldGreen,
+          backgroundColor: scaffoldBg,
           elevation: 0,
           toolbarHeight: 116,
+          leading: IconButton(
+            icon: Icon(
+              widget.isDarkMode ? Icons.light_mode : Icons.dark_mode,
+              color: tabColor,
+            ),
+            onPressed: widget.onToggleTheme,
+            tooltip: widget.isDarkMode ? 'Switch to light mode' : 'Switch to dark mode',
+          ),
           title: Center(
             child: Padding(
               padding: const EdgeInsets.only(top: 12),
@@ -116,9 +149,9 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
           bottom: TabBar(
-            labelColor: _kLogoBackgroundDark,
-            unselectedLabelColor: _kLogoBackgroundDark.withValues(alpha: 0.85),
-            indicatorColor: _kLogoBackgroundDark,
+            labelColor: tabColor,
+            unselectedLabelColor: tabColor.withValues(alpha: 0.85),
+            indicatorColor: tabColor,
             tabs: const [
               Tab(text: 'Student CV'),
               Tab(text: 'Spouse CV'),
@@ -131,7 +164,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Container(
                 margin: const EdgeInsets.fromLTRB(16, 0, 16, 0),
                 decoration: BoxDecoration(
-                  color: _kFormContainerCream,
+                  color: formContainerColor,
                   borderRadius: BorderRadius.circular(16),
                   boxShadow: [
                     BoxShadow(
@@ -157,17 +190,17 @@ class _HomeScreenState extends State<HomeScreen> {
                     children: [
                       Text(
                         '© Created by Guga Baratashvili',
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 10,
-                          color: _kLogoBackgroundDark,
+                          color: tabColor,
                         ),
                       ),
                       const SizedBox(height: 2),
-                      const Text(
+                      Text(
                         'Contact MILGP Tbilisi for technical issues.',
                         style: TextStyle(
                           fontSize: 10,
-                          color: _kLogoBackgroundDark,
+                          color: tabColor,
                         ),
                       ),
                     ],

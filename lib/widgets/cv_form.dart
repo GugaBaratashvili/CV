@@ -1142,10 +1142,12 @@ class _CvFormState extends State<CvForm> {
     TextInputType keyboardType = TextInputType.text,
     String? Function(String?)? validator,
   }) {
+    final colorScheme = Theme.of(context).colorScheme;
     return TextFormField(
       controller: controller,
       maxLines: maxLines,
       keyboardType: keyboardType,
+      style: TextStyle(color: colorScheme.onSurface, fontSize: 16),
       decoration: InputDecoration(labelText: label),
       validator: validator ?? _requiredValidator,
     );
@@ -1153,9 +1155,11 @@ class _CvFormState extends State<CvForm> {
 
   /// Builds a date-of-birth field that shows a date picker dialog.
   Widget _buildDateField(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return TextFormField(
       controller: _dobController,
       readOnly: true,
+      style: TextStyle(color: colorScheme.onSurface, fontSize: 16),
       decoration: const InputDecoration(
         labelText: 'Date of birth',
         suffixIcon: Icon(Icons.calendar_today),
@@ -1207,9 +1211,11 @@ class _CvFormState extends State<CvForm> {
     required TextEditingController controller,
     String label = 'Date of Birth',
   }) {
+    final colorScheme = Theme.of(context).colorScheme;
     return TextFormField(
       controller: controller,
       readOnly: true,
+      style: TextStyle(color: colorScheme.onSurface, fontSize: 16),
       decoration: InputDecoration(
         labelText: label,
         suffixIcon: const Icon(Icons.calendar_today),
@@ -1339,9 +1345,11 @@ class _CvFormState extends State<CvForm> {
     required TextEditingController controller,
     required String label,
   }) {
+    final colorScheme = Theme.of(context).colorScheme;
     return TextFormField(
       controller: controller,
       readOnly: true,
+      style: TextStyle(color: colorScheme.onSurface, fontSize: 16),
       decoration: InputDecoration(
         labelText: label,
         hintText: 'Month and year',
@@ -1769,9 +1777,11 @@ class _CvFormState extends State<CvForm> {
 
   /// Builds "In Military Service from" field: month and year only (no day).
   Widget _buildMilitaryServiceFromField(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return TextFormField(
       controller: _militaryServiceFromController,
       readOnly: true,
+      style: TextStyle(color: colorScheme.onSurface, fontSize: 16),
       decoration: const InputDecoration(
         labelText: 'In Military Service from',
         hintText: 'Month and year',

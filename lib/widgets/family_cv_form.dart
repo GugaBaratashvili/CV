@@ -505,10 +505,12 @@ class _FamilyCvFormState extends State<FamilyCvForm> {
     TextInputType keyboardType = TextInputType.text,
     String? Function(String?)? validator,
   }) {
+    final colorScheme = Theme.of(context).colorScheme;
     return TextFormField(
       controller: controller,
       maxLines: maxLines,
       keyboardType: keyboardType,
+      style: TextStyle(color: colorScheme.onSurface, fontSize: 16),
       decoration: InputDecoration(labelText: label),
       validator: validator ?? _requiredValidator,
     );
@@ -520,9 +522,11 @@ class _FamilyCvFormState extends State<FamilyCvForm> {
     required TextEditingController controller,
     String label = 'Date of Birth',
   }) {
+    final colorScheme = Theme.of(context).colorScheme;
     return TextFormField(
       controller: controller,
       readOnly: true,
+      style: TextStyle(color: colorScheme.onSurface, fontSize: 16),
       decoration: InputDecoration(
         labelText: label,
         suffixIcon: const Icon(Icons.calendar_today),
@@ -628,9 +632,11 @@ class _FamilyCvFormState extends State<FamilyCvForm> {
   ];
 
   Widget _buildDobField(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return TextFormField(
       controller: _dateOfBirthController,
       readOnly: true,
+      style: TextStyle(color: colorScheme.onSurface, fontSize: 16),
       decoration: const InputDecoration(
         labelText: 'Date of birth',
         suffixIcon: Icon(Icons.calendar_today),
