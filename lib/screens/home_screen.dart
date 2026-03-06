@@ -2,17 +2,20 @@ import 'package:flutter/material.dart';
 import '../widgets/cv_form.dart';
 import '../widgets/family_cv_form.dart';
 
-/// Bright lime green background (matches reference UI).
-const Color _kScaffoldGreen = Color(0xFF8BC34A);
+/// Main background color.
+const Color _kScaffoldGreen = Color(0xFF4CBB17);
 
-/// Light cream / pale yellow form container.
-const Color _kFormContainerCream = Color(0xFFFFFDE7);
+/// Slate: light panel (off-white / very light gray).
+const Color _kFormContainerCream = Color(0xFFF5F8F6);
 
-/// Dark color similar to logo background (for tab text).
-const Color _kLogoBackgroundDark = Color(0xFF212121);
+/// Dark text for contrast – tab text, footer, body text.
+const Color _kLogoBackgroundDark = Color(0xFF2D3129);
 
-/// Dark purple / indigo for headings (matches form section labels).
-const Color _kHeadingPurple = Color(0xFF3949AB);
+/// Dark text for section headings.
+const Color _kHeadingPurple = Color(0xFF2D3129);
+
+/// Slate: Medium Vibrant Green – primary buttons.
+const Color _kAccentGreen = Color(0xFF4DBE55);
 
 /// Shows the welcome / user agreement dialog (app color scheme).
 void _showWelcomeDialog(BuildContext context) {
@@ -55,8 +58,8 @@ void _showWelcomeDialog(BuildContext context) {
               child: FilledButton(
                 onPressed: () => Navigator.of(context).pop(),
                 style: FilledButton.styleFrom(
-                  backgroundColor: _kScaffoldGreen,
-                  foregroundColor: _kLogoBackgroundDark,
+                  backgroundColor: _kAccentGreen,
+                  foregroundColor: Colors.white,
                   padding: const EdgeInsets.symmetric(vertical: 14),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
@@ -114,7 +117,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           bottom: TabBar(
             labelColor: _kLogoBackgroundDark,
-            unselectedLabelColor: _kLogoBackgroundDark.withValues(alpha: 0.7),
+            unselectedLabelColor: _kLogoBackgroundDark.withValues(alpha: 0.85),
             indicatorColor: _kLogoBackgroundDark,
             tabs: const [
               Tab(text: 'Student CV'),
@@ -154,17 +157,17 @@ class _HomeScreenState extends State<HomeScreen> {
                     children: [
                       Text(
                         '© Created by Guga Baratashvili',
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 10,
-                          color: _kLogoBackgroundDark.withValues(alpha: 0.85),
+                          color: _kLogoBackgroundDark,
                         ),
                       ),
                       const SizedBox(height: 2),
-                      Text(
+                      const Text(
                         'Contact MILGP Tbilisi for technical issues.',
                         style: TextStyle(
                           fontSize: 10,
-                          color: _kLogoBackgroundDark.withValues(alpha: 0.85),
+                          color: _kLogoBackgroundDark,
                         ),
                       ),
                     ],

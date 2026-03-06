@@ -738,7 +738,7 @@ class _CvFormState extends State<CvForm> {
                   'Student CV',
                   style: Theme.of(context).textTheme.titleLarge?.copyWith(
                     fontWeight: FontWeight.bold,
-                    color: const Color(0xFF3949AB),
+                    color: const Color(0xFF2D3129),
                   ),
                 ),
               ],
@@ -1125,7 +1125,7 @@ class _CvFormState extends State<CvForm> {
       style: const TextStyle(
         fontSize: 16,
         fontWeight: FontWeight.bold,
-        color: Color(0xFF3949AB), // Dark purple / indigo section labels
+        color: Color(0xFF2D3129), // Dark text for contrast
       ),
     );
   }
